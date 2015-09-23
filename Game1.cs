@@ -22,6 +22,9 @@ namespace Tetris_Three
         bool isWeCanMoveObject = true;
         List<Vector2> fallenSquares = new List<Vector2>();
 
+        //game data
+        long score = 0;
+
         //list of array of all Possible figures of this game
         List<Vector2[]> figures = new List<Vector2[]>();
         Vector2 figureStartPos = new Vector2(0, 0);
@@ -709,10 +712,12 @@ namespace Tetris_Three
                         SquaresInLine[line]++;
                     }
                     //erase squares
+                    int tempScoreKoef = 0;
                     for (int k = 0; k < yGameSize; k++)
                     {
                         if (SquaresInLine[k] >= xGameSize)
                         {
+                            tempScoreKoef++;
                             //clean line 
                             for (int c = fallenSquares.Count-1; c >=0; c--)
                             {
@@ -729,6 +734,14 @@ namespace Tetris_Three
                                 } 
                             }
                         }
+                    }
+
+                    //add scores
+                    if (tempScoreKoef > 0)
+                    {
+                        int tempScore = 0;
+                        tempScore = 100 * tempScoreKoef;
+                        score += tempScore + tempScore - 100;
                     }
 
                     //drop newt figure
@@ -758,7 +771,7 @@ namespace Tetris_Three
             spriteBatch.Begin();
 
             //draw game infot
-            spriteBatch.DrawString(font, "Hello", new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(font, "Score: "+Convert.ToString(score), new Vector2(10, 10), Color.Black);
 
             //draw current falling figure
             spriteBatch.Draw(squareTexture, currentFallingFigurePosition[0], Color.White);
