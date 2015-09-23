@@ -62,6 +62,8 @@ namespace Tetris_Three
 
         //vectors of move action
         Vector2 DirTop = new Vector2(0, -1);
+        Vector2 DirDownDefault = new Vector2(0, 1);
+        Vector2 DirDownFastDefault = new Vector2(0, 6);
         Vector2 DirDown = new Vector2(0, 1);
         Vector2 DirDownFast = new Vector2(0, 6);
         Vector2 DirLeft = new Vector2(-3, 0);
@@ -742,6 +744,13 @@ namespace Tetris_Three
                         int tempScore = 0;
                         tempScore = 100 * tempScoreKoef;
                         score += tempScore + tempScore - 100;
+
+                        //up speed
+                        if (score >= 5000)
+                        {
+                            DirDown = DirDownDefault + new Vector2(0, ((score) / 5000));
+                            DirDownFast = DirDownFastDefault + new Vector2(0, ((score) / 5000));
+                        }
                     }
 
                     //drop newt figure
@@ -771,7 +780,9 @@ namespace Tetris_Three
             spriteBatch.Begin();
 
             //draw game infot
-            spriteBatch.DrawString(font, "Score: "+Convert.ToString(score), new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(font, "Score: " + Convert.ToString(score), new Vector2(10, 20), Color.Black);
+            spriteBatch.DrawString(font, "Speed Default: " + Convert.ToString(DirDown.Y), new Vector2(10, 20*2), Color.Black);
+            spriteBatch.DrawString(font, "Speed Fast: " + Convert.ToString(DirDownFast.Y), new Vector2(10, 20*3), Color.Black);
 
             //draw current falling figure
             spriteBatch.Draw(squareTexture, currentFallingFigurePosition[0], Color.White);
