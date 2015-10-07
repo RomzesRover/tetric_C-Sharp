@@ -24,6 +24,7 @@ namespace Tetris_Three
 
         //game data
         long score = 0;
+        bool isTrue = false;
 
         //list of array of all Possible figures of this game
         List<Vector2[]> figures = new List<Vector2[]>();
@@ -238,10 +239,17 @@ namespace Tetris_Three
                         for (int i = 0; i < fallenSquares.Count; i++)
                         {
                             //check on impact with an existing fallen squares
-                            if (((fallenSquares[i].X == currentFallingFigurePosition[0].X) && (fallenSquares[i].Y - currentFallingFigurePosition[0].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[0].Y < squareTexture.Height)) ||
-                                ((fallenSquares[i].X == currentFallingFigurePosition[1].X) && (fallenSquares[i].Y - currentFallingFigurePosition[1].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[1].Y < squareTexture.Height)) ||
-                                ((fallenSquares[i].X == currentFallingFigurePosition[2].X) && (fallenSquares[i].Y - currentFallingFigurePosition[2].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[2].Y < squareTexture.Height)) ||
-                                ((fallenSquares[i].X == currentFallingFigurePosition[3].X) && (fallenSquares[i].Y - currentFallingFigurePosition[3].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[3].Y < squareTexture.Height)))
+                            isTrue = false;
+
+                            for (int f = 0; f < squaresInFigure; f++)
+                            {
+                                if (((fallenSquares[i].X == currentFallingFigurePosition[f].X) && (fallenSquares[i].Y - currentFallingFigurePosition[f].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[f].Y < squareTexture.Height))) {
+                                    isTrue = true;
+                                    break;
+                                }
+                            }
+                            
+                            if (isTrue)
                             {
                                 for (int f = 0; f < squaresInFigure; f++)
                                 {
@@ -250,10 +258,18 @@ namespace Tetris_Three
                                 break;
                             }
                             else {
-                                if (((fallenSquares[i].X == currentFallingFigurePosition[0].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[0].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[0].Y < squareTexture.Height)) ||
-                                    ((fallenSquares[i].X == currentFallingFigurePosition[1].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[1].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[1].Y < squareTexture.Height)) ||
-                                    ((fallenSquares[i].X == currentFallingFigurePosition[2].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[2].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[2].Y < squareTexture.Height)) ||
-                                    ((fallenSquares[i].X == currentFallingFigurePosition[3].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[3].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[3].Y < squareTexture.Height)))
+                                isTrue = false;
+
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    if (((fallenSquares[i].X == currentFallingFigurePosition[f].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[f].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[f].Y < squareTexture.Height)))
+                                    {
+                                        isTrue = true;
+                                        break;
+                                    }
+                                }
+
+                                if (isTrue)
                                 {
                                     for (int f = 0; f < squaresInFigure; f++)
                                     {
@@ -285,14 +301,15 @@ namespace Tetris_Three
                         {
                             if (mostRightPosition > width)
                             {
-                                currentFallingFigurePosition[0] += DirLeft;
-                                currentFallingFigurePosition[1] += DirLeft;
-                                currentFallingFigurePosition[2] += DirLeft;
-                                currentFallingFigurePosition[3] += DirLeft;
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    currentFallingFigurePosition[f] += DirLeft;
+                                }
+                                
                             }
                             //find new right position
                             mostRightPosition = currentFallingFigurePosition[0].X + squareTexture.Width;
-                            for (int i = 0; i < 4; i++)
+                            for (int i = 0; i < squaresInFigure; i++)
                             {
                                 if (currentFallingFigurePosition[i].X + squareTexture.Width > mostRightPosition)
                                 {
@@ -304,28 +321,44 @@ namespace Tetris_Three
                         for (int i = 0; i < fallenSquares.Count; i++)
                         {
                             //check on impact with an existing fallen squares
-                            if (((fallenSquares[i].X == currentFallingFigurePosition[0].X) && (fallenSquares[i].Y - currentFallingFigurePosition[0].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[0].Y < squareTexture.Height)) ||
-                                ((fallenSquares[i].X == currentFallingFigurePosition[1].X) && (fallenSquares[i].Y - currentFallingFigurePosition[1].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[1].Y < squareTexture.Height)) ||
-                                ((fallenSquares[i].X == currentFallingFigurePosition[2].X) && (fallenSquares[i].Y - currentFallingFigurePosition[2].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[2].Y < squareTexture.Height)) ||
-                                ((fallenSquares[i].X == currentFallingFigurePosition[3].X) && (fallenSquares[i].Y - currentFallingFigurePosition[3].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[3].Y < squareTexture.Height)))
+                            isTrue = false;
+
+                            for (int f = 0; f < squaresInFigure; f++)
                             {
-                                currentFallingFigurePosition[0] += DirLeft;
-                                currentFallingFigurePosition[1] += DirLeft;
-                                currentFallingFigurePosition[2] += DirLeft;
-                                currentFallingFigurePosition[3] += DirLeft;
+                                if (((fallenSquares[i].X == currentFallingFigurePosition[f].X) && (fallenSquares[i].Y - currentFallingFigurePosition[f].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[f].Y < squareTexture.Height)))
+                                {
+                                    isTrue = true;
+                                    break;
+                                }
+                            }
+
+                            if (isTrue)
+                            {
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    currentFallingFigurePosition[f] += DirLeft;
+                                }
                                 break;
                             }
                             else
                             {
-                                if (((fallenSquares[i].X == currentFallingFigurePosition[0].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[0].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[0].Y < squareTexture.Height)) ||
-                                    ((fallenSquares[i].X == currentFallingFigurePosition[1].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[1].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[1].Y < squareTexture.Height)) ||
-                                    ((fallenSquares[i].X == currentFallingFigurePosition[2].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[2].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[2].Y < squareTexture.Height)) ||
-                                    ((fallenSquares[i].X == currentFallingFigurePosition[3].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[3].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[3].Y < squareTexture.Height)))
+                                isTrue = false;
+
+                                for (int f = 0; f < squaresInFigure; f++)
                                 {
-                                    currentFallingFigurePosition[0] += DirLeft;
-                                    currentFallingFigurePosition[1] += DirLeft;
-                                    currentFallingFigurePosition[2] += DirLeft;
-                                    currentFallingFigurePosition[3] += DirLeft;
+                                    if (((fallenSquares[i].X == currentFallingFigurePosition[f].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[f].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[f].Y < squareTexture.Height)))
+                                    {
+                                        isTrue = true;
+                                        break;
+                                    }
+                                }
+
+                                if (isTrue)
+                                {
+                                    for (int f = 0; f < squaresInFigure; f++)
+                                    {
+                                        currentFallingFigurePosition[f] += DirLeft;
+                                    }
                                     break;
                                 }
                             }
@@ -399,10 +432,12 @@ namespace Tetris_Three
                         Vector2 oldZeroZero = currentFallingFigurePosition[0];
 
                         currentFallingFigurePosition[0] = figures[currentFigureFalling][0] + oldZeroZero;
-                        currentFallingFigurePosition[1] = figures[currentFigureFalling][1] + currentFallingFigurePosition[0]; 
-                        currentFallingFigurePosition[2] = figures[currentFigureFalling][2] + currentFallingFigurePosition[0];
-                        currentFallingFigurePosition[3] = figures[currentFigureFalling][3] + currentFallingFigurePosition[0];
 
+                        for (int f = 1; f < squaresInFigure; f++)
+                        {
+                            currentFallingFigurePosition[f] = figures[currentFigureFalling][f] + currentFallingFigurePosition[0];
+                        }
+                        
                         //calculate and fix left position
                         double mostLeftPosition = currentFallingFigurePosition[0].X;
                         for (int i = 0; i < 4; i++)
@@ -416,10 +451,10 @@ namespace Tetris_Three
                         {
                             if (mostLeftPosition < 0)
                             {
-                                currentFallingFigurePosition[0] += DirRight;
-                                currentFallingFigurePosition[1] += DirRight;
-                                currentFallingFigurePosition[2] += DirRight;
-                                currentFallingFigurePosition[3] += DirRight;
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    currentFallingFigurePosition[f] += DirRight;
+                                }
                             }
                             //find new left position
                             mostLeftPosition = currentFallingFigurePosition[0].X;
@@ -445,10 +480,10 @@ namespace Tetris_Three
                         {
                             if (mostRightPosition > width)
                             {
-                                currentFallingFigurePosition[0] += DirLeft;
-                                currentFallingFigurePosition[1] += DirLeft;
-                                currentFallingFigurePosition[2] += DirLeft;
-                                currentFallingFigurePosition[3] += DirLeft;
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    currentFallingFigurePosition[f] += DirLeft;
+                                }
                             }
                             //find new right position
                             mostRightPosition = currentFallingFigurePosition[0].X + squareTexture.Width;
@@ -620,17 +655,17 @@ namespace Tetris_Three
                 { 
                     if (Keyboard.GetState().IsKeyDown(Keys.Down))
                     {
-                        currentFallingFigurePosition[0] += DirDownFast;
-                        currentFallingFigurePosition[1] += DirDownFast;
-                        currentFallingFigurePosition[2] += DirDownFast;
-                        currentFallingFigurePosition[3] += DirDownFast;
+                        for (int f = 0; f < squaresInFigure; f++)
+                        {
+                            currentFallingFigurePosition[f] += DirDownFast;
+                        }
                     }
                     else
                     {
-                        currentFallingFigurePosition[0] += DirDown;
-                        currentFallingFigurePosition[1] += DirDown;
-                        currentFallingFigurePosition[2] += DirDown;
-                        currentFallingFigurePosition[3] += DirDown;
+                        for (int f = 0; f < squaresInFigure; f++)
+                        {
+                            currentFallingFigurePosition[f] += DirDown;
+                        }
                     }
                 }
                 isWeCanMoveObject = false;
@@ -641,17 +676,17 @@ namespace Tetris_Three
                 //move to new pos position our simple square
                 if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
-                    currentFallingFigurePosition[0] += DirDownFast;
-                    currentFallingFigurePosition[1] += DirDownFast;
-                    currentFallingFigurePosition[2] += DirDownFast;
-                    currentFallingFigurePosition[3] += DirDownFast;
+                    for (int f = 0; f < squaresInFigure; f++)
+                    {
+                        currentFallingFigurePosition[f] += DirDownFast;
+                    }
                 }
                 else
                 {
-                    currentFallingFigurePosition[0] += DirDown;
-                    currentFallingFigurePosition[1] += DirDown;
-                    currentFallingFigurePosition[2] += DirDown;
-                    currentFallingFigurePosition[3] += DirDown;
+                    for (int f = 0; f < squaresInFigure; f++)
+                    {
+                        currentFallingFigurePosition[f] += DirDown;
+                    }
                 }
             }
 
@@ -682,10 +717,10 @@ namespace Tetris_Three
                 //fix position
                 while (currentFallingFigurePosition[i].Y + squareTexture.Height > topElement[(int)currentFallingFigurePosition[i].X / squareTexture.Width])
                 {
-                    currentFallingFigurePosition[0] += DirTop;
-                    currentFallingFigurePosition[1] += DirTop;
-                    currentFallingFigurePosition[2] += DirTop;
-                    currentFallingFigurePosition[3] += DirTop;
+                    for (int f = 0; f < squaresInFigure; f++)
+                    {
+                        currentFallingFigurePosition[f] += DirTop;
+                    }
                 }
                 if (currentFallingFigurePosition[i].Y + squareTexture.Height == topElement[(int)currentFallingFigurePosition[i].X / squareTexture.Width]) {
                     //figure is fallen on the bottom of game size, save current figure to fallen squares, drop new figure
@@ -757,10 +792,10 @@ namespace Tetris_Three
                     //drop newt figure
                     currentFigureFalling = (new Random(DateTime.Now.Millisecond)).Next(figures.Count);
                     currentFallingFigurePosition = new Vector2[4] { figures[currentFigureFalling][0], figures[currentFigureFalling][1], figures[currentFigureFalling][2], figures[currentFigureFalling][3] };
-                    currentFallingFigurePosition[0] += figureStartPos;
-                    currentFallingFigurePosition[1] += figureStartPos;
-                    currentFallingFigurePosition[2] += figureStartPos;
-                    currentFallingFigurePosition[3] += figureStartPos;
+                    for (int f = 0; f < squaresInFigure; f++)
+                    {
+                        currentFallingFigurePosition[f] += figureStartPos;
+                    }
                     //exit from cycle
                     break;
                 }
@@ -786,10 +821,10 @@ namespace Tetris_Three
             spriteBatch.DrawString(font, "Speed Fast: " + Convert.ToString(DirDownFast.Y), new Vector2(10, 20*3), Color.Black);
 
             //draw current falling figure
-            spriteBatch.Draw(squareTexture, currentFallingFigurePosition[0], Color.White);
-            spriteBatch.Draw(squareTexture, currentFallingFigurePosition[1], Color.White);
-            spriteBatch.Draw(squareTexture, currentFallingFigurePosition[2], Color.White);
-            spriteBatch.Draw(squareTexture, currentFallingFigurePosition[3], Color.White);
+            for (int f = 0; f < squaresInFigure; f++)
+            {
+                spriteBatch.Draw(squareTexture, currentFallingFigurePosition[f], Color.White);
+            }
 
             //draw fallen squares
             for (int i = 0; i < fallenSquares.Count; i++)
