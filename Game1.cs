@@ -18,7 +18,7 @@ namespace Tetris_Three
         SpriteBatch spriteBatch;
 
         //game logic 
-        static int xGameSize = 13, yGameSize = 20;
+        const int xGameSize = 13, yGameSize = 20, squaresInFigure = 4;
         bool isWeCanMoveObject = true;
         List<Vector2> fallenSquares = new List<Vector2>();
 
@@ -57,7 +57,7 @@ namespace Tetris_Three
         */
 
         //current falling figure data
-        Vector2[] currentFallingFigurePosition = new Vector2[4];
+        Vector2[] currentFallingFigurePosition = new Vector2[squaresInFigure];
         int currentFigureFalling = 0;
 
         //vectors of move action
@@ -136,40 +136,40 @@ namespace Tetris_Three
             
             //init figures
             //line
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width*1, 0), new Vector2(squareTexture.Width*2, 0), new Vector2(squareTexture.Width*3, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height*1), new Vector2(0, squareTexture.Height*2), new Vector2(0, squareTexture.Height*3) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width*1, 0), new Vector2(squareTexture.Width*2, 0), new Vector2(squareTexture.Width*3, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height*1), new Vector2(0, squareTexture.Height*2), new Vector2(0, squareTexture.Height*3) });
             //horse (top head)
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, 0), new Vector2(squareTexture.Width * 2, squareTexture.Height * 1) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -2), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 2, squareTexture.Height * 1) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(0, squareTexture.Height * 2), new Vector2(squareTexture.Width * 1, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, 0), new Vector2(squareTexture.Width * 2, squareTexture.Height * 1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -2), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 2, squareTexture.Height * 1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(0, squareTexture.Height * 2), new Vector2(squareTexture.Width * 1, 0) });
             //horse (bottom head)
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, squareTexture.Height * -1), new Vector2(squareTexture.Width * 2, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(0, squareTexture.Height * 2), new Vector2(squareTexture.Width * 1, squareTexture.Height * 2) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 2) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, squareTexture.Height * -1), new Vector2(squareTexture.Width * 2, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(0, squareTexture.Height * 2), new Vector2(squareTexture.Width * 1, squareTexture.Height * 2) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 2) });
             //pyramid
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 2, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(0, squareTexture.Height * 2), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 2, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(0, squareTexture.Height * 2), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1) });
             // Z (left)
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 2) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, squareTexture.Height * -1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * 2) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 2, squareTexture.Height * -1) });
             // Z (right)
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0) });
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 2, squareTexture.Height * 1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, squareTexture.Height * -1), new Vector2(squareTexture.Width * 1, 0) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1), new Vector2(squareTexture.Width * 2, squareTexture.Height * 1) });
             //tetr
-            figures.Add(new Vector2[4] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1) });
+            figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height * 1), new Vector2(squareTexture.Width * 1, 0), new Vector2(squareTexture.Width * 1, squareTexture.Height * 1) });
 
             //drop first figure
             currentFigureFalling = (new Random(DateTime.Now.Millisecond)).Next(figures.Count);
-            currentFallingFigurePosition = new Vector2[4] { figures[currentFigureFalling][0], figures[currentFigureFalling][1], figures[currentFigureFalling][2], figures[currentFigureFalling][3] };
-            currentFallingFigurePosition[0] += figureStartPos;
-            currentFallingFigurePosition[1] += figureStartPos;
-            currentFallingFigurePosition[2] += figureStartPos;
-            currentFallingFigurePosition[3] += figureStartPos;
+            currentFallingFigurePosition = new Vector2[squaresInFigure] { figures[currentFigureFalling][0], figures[currentFigureFalling][1], figures[currentFigureFalling][2], figures[currentFigureFalling][3] };
 
+            for (int f = 0; f < squaresInFigure; f++) {
+                currentFallingFigurePosition[f] += figureStartPos;
+            }
+            
         }
 
         /// <summary>
@@ -199,15 +199,15 @@ namespace Tetris_Three
                     //move left
                     if (Keyboard.GetState().IsKeyDown(Keys.Left))
                     {
-                        currentFallingFigurePosition[0] += DirLeft;
-                        currentFallingFigurePosition[1] += DirLeft;
-                        currentFallingFigurePosition[2] += DirLeft;
-                        currentFallingFigurePosition[3] += DirLeft;
 
-
+                        for (int f = 0; f < squaresInFigure; f++)
+                        {
+                            currentFallingFigurePosition[f] += DirLeft;
+                        }
+                        
                         //calculate and fix left position
                         double mostLeftPosition = currentFallingFigurePosition[0].X;
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < squaresInFigure; i++)
                         {
                             if (currentFallingFigurePosition[i].X < mostLeftPosition)
                             {
@@ -218,14 +218,15 @@ namespace Tetris_Three
                         {
                             if (mostLeftPosition < 0)
                             {
-                                currentFallingFigurePosition[0] += DirRight;
-                                currentFallingFigurePosition[1] += DirRight;
-                                currentFallingFigurePosition[2] += DirRight;
-                                currentFallingFigurePosition[3] += DirRight;
+
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    currentFallingFigurePosition[f] += DirRight;
+                                }
                             }
                             //find new left position
                             mostLeftPosition = currentFallingFigurePosition[0].X;
-                            for (int i = 0; i < 4; i++)
+                            for (int i = 0; i < squaresInFigure; i++)
                             {
                                 if (currentFallingFigurePosition[i].X < mostLeftPosition)
                                 {
@@ -242,10 +243,10 @@ namespace Tetris_Three
                                 ((fallenSquares[i].X == currentFallingFigurePosition[2].X) && (fallenSquares[i].Y - currentFallingFigurePosition[2].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[2].Y < squareTexture.Height)) ||
                                 ((fallenSquares[i].X == currentFallingFigurePosition[3].X) && (fallenSquares[i].Y - currentFallingFigurePosition[3].Y > 0) && (fallenSquares[i].Y - currentFallingFigurePosition[3].Y < squareTexture.Height)))
                             {
-                                currentFallingFigurePosition[0] += DirRight;
-                                currentFallingFigurePosition[1] += DirRight;
-                                currentFallingFigurePosition[2] += DirRight;
-                                currentFallingFigurePosition[3] += DirRight;
+                                for (int f = 0; f < squaresInFigure; f++)
+                                {
+                                    currentFallingFigurePosition[f] += DirRight;
+                                }
                                 break;
                             }
                             else {
@@ -254,10 +255,10 @@ namespace Tetris_Three
                                     ((fallenSquares[i].X == currentFallingFigurePosition[2].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[2].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[2].Y < squareTexture.Height)) ||
                                     ((fallenSquares[i].X == currentFallingFigurePosition[3].X) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[3].Y > 0) && (fallenSquares[i].Y + (squareTexture.Height * 80 / 100) - currentFallingFigurePosition[3].Y < squareTexture.Height)))
                                 {
-                                    currentFallingFigurePosition[0] += DirRight;
-                                    currentFallingFigurePosition[1] += DirRight;
-                                    currentFallingFigurePosition[2] += DirRight;
-                                    currentFallingFigurePosition[3] += DirRight;
+                                    for (int f = 0; f < squaresInFigure; f++)
+                                    {
+                                        currentFallingFigurePosition[f] += DirRight;
+                                    }
                                     break;
                                 }
                             }
@@ -266,10 +267,10 @@ namespace Tetris_Three
                     //move right
                     if (Keyboard.GetState().IsKeyDown(Keys.Right))
                     {
-                        currentFallingFigurePosition[0] += DirRight;
-                        currentFallingFigurePosition[1] += DirRight;
-                        currentFallingFigurePosition[2] += DirRight;
-                        currentFallingFigurePosition[3] += DirRight;
+                        for (int f = 0; f < squaresInFigure; f++)
+                        {
+                            currentFallingFigurePosition[f] += DirRight;
+                        }
 
                         //calculate and fix right position
                         double mostRightPosition = currentFallingFigurePosition[0].X + squareTexture.Width;
