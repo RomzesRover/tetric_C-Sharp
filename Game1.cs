@@ -18,7 +18,7 @@ namespace Tetris_Three
         SpriteBatch spriteBatch;
 
         //game logic 
-        const int xGameSize = 13, yGameSize = 20, squaresInFigure = 4;
+        const int xGameSize = 13, yGameSize = 20, squaresInFigure = 4, squaresInFigureTemp = 1;
         bool isWeCanMoveObject = true;
         List<Vector2> fallenSquares = new List<Vector2>();
 
@@ -28,6 +28,7 @@ namespace Tetris_Three
 
         //list of array of all Possible figures of this game
         List<Vector2[]> figures = new List<Vector2[]>();
+        List<Vector2[]> figuresTemp = new List<Vector2[]>();
         Vector2 figureStartPos = new Vector2(0, 0);
         /*
         0 - line horizontal
@@ -97,6 +98,21 @@ namespace Tetris_Three
             base.Initialize();
         }
 
+        public void generateFigures() {
+
+            //figuresTemp.Add(generateFigure(squaresInFigure));
+            generateFigure(new Vector2[squaresInFigure], squaresInFigure-1);
+        }
+
+        public void generateFigure(Vector2[] figure, int iteration)
+        {
+            if (iteration == 0)
+            {
+                figure[0] = new Vector2(0, 0);
+                return;
+            }
+        }
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -134,8 +150,9 @@ namespace Tetris_Three
             //set default value of move square
             DirLeft = new Vector2(-squareTexture.Width, 0);
             DirRight = new Vector2(squareTexture.Width, 0);
-            
+
             //init figures
+            generateFigures();
             //line
             figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(squareTexture.Width*1, 0), new Vector2(squareTexture.Width*2, 0), new Vector2(squareTexture.Width*3, 0) });
             figures.Add(new Vector2[squaresInFigure] { new Vector2(0, 0), new Vector2(0, squareTexture.Height*1), new Vector2(0, squareTexture.Height*2), new Vector2(0, squareTexture.Height*3) });
